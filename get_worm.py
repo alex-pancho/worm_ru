@@ -65,7 +65,7 @@ def download_file_from_google_drive(file_id, file_name, mime=None):
 
     if mime is None:
         mime = 'txt'
-    file_name = file_name+".rst"
+    file_name = file_name.replace(" ", "_")+".rst"
     file_path = os.path.join(os.getcwd(), "source", file_name)
     gdd.download_file_from_google_drive(
         file_id=file_id,
