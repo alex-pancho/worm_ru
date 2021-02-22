@@ -8,13 +8,12 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Оглавление:
 
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   001 Глава 1.01
+   002 Глава 1.02
+   003 Глава 1.03
+   004 Глава 1.04
+   005 Глава 1.05
+   006 Глава 1.06
+   007 Интерлюдия 1 (Денни)
