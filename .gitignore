@@ -4,3 +4,4 @@ _.bat
 credentials.json
 *doctree*
 _sources
+build/html
