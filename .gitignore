@@ -3,5 +3,4 @@ __pycache__/
 _.bat
 credentials.json
 *doctree*
-_sources
 build/html
