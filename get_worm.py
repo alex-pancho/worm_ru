@@ -59,8 +59,6 @@ def lookup_files_in_folders(folders, sorted_folders):
             download_file_from_google_drive(fi["id"], fi["name"])
             chapters.append(fi["name"])
             index_builder()
-            to_html()
-            input("c..")
 
 
 def download_file_from_google_drive(file_id, file_name, mime=None):
@@ -78,7 +76,11 @@ def download_file_from_google_drive(file_id, file_name, mime=None):
 
     with open(file_path, 'r', encoding='utf-8') as reader:
         output = reader.readline()
-        output = output + reader.readline()
+        secline = reader.readline()
+        if "#" in secline:
+            output = output + secline
+        else:
+            output = output + "##################\n" + secline
         for line in reader:
             output = output + line.replace("\n", "\n\n")
     with open(file_path, 'w', encoding='utf-8') as writer:
@@ -99,13 +101,11 @@ def index_builder():
     with open(file_path, 'w', encoding='utf-8') as writer:
         writer.write(output)
         for ch in chapters:
-            writer.write("   "+ch)
+            writer.write("   "+ch+"\n")
 
 
 def to_html():
-    sourcedir = os.path.join(os.getcwd(), "source")
-    builddir = os.path.join(os.getcwd(), "docs")
-    os.system(f"sphinx-build -b html {sourcedir} {builddir}")
+    os.system("make github")
 
 
 def main():
