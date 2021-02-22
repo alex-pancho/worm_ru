@@ -56,8 +56,9 @@ def lookup_files_in_folders(folders, sorted_folders):
     for f in sorted_folders:
         all_files = get_files_in_folders(folders[f])
         for fi in all_files:
-            download_file_from_google_drive(fi["id"], fi["name"])
-            chapters.append(fi["name"])
+            file_name = fi["name"].replace(" ", "_")
+            download_file_from_google_drive(fi["id"], file_name)
+            chapters.append(file_name)
             index_builder()
 
 
@@ -65,7 +66,7 @@ def download_file_from_google_drive(file_id, file_name, mime=None):
 
     if mime is None:
         mime = 'txt'
-    file_name = file_name.replace(" ", "_")+".rst"
+    file_name = file_name+".rst"
     file_path = os.path.join(os.getcwd(), "source", file_name)
     gdd.download_file_from_google_drive(
         file_id=file_id,
