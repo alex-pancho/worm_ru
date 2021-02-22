@@ -1,6 +1,5 @@
 from getfilelistpy import getfilelist
 from google_drive_downloader import GoogleDriveDownloader as gdd
-import requests
 import json
 import os
 
@@ -22,6 +21,7 @@ worm_dict = {
         ]
     }
 chapters = []
+
 
 def get_drive_source(drive_id, mode="folder"):
     resource = {
@@ -58,6 +58,8 @@ def lookup_files_in_folders(folders, sorted_folders):
         for fi in all_files:
             download_file_from_google_drive(fi["id"], fi["name"])
             chapters.append(fi["name"])
+            index_builder()
+            to_html()
             input("c..")
 
 
@@ -82,10 +84,10 @@ def download_file_from_google_drive(file_id, file_name, mime=None):
     with open(file_path, 'w', encoding='utf-8') as writer:
         writer.write(output)
 
-def index_builder(drive_dict, chapters):
+def index_builder():
+    drive_dict = worm_dict
     file_path = os.path.join(os.getcwd(), "source", "index.rst")
-    output = f'''
-    {drive_dict["name"]}
+    output = f'''{drive_dict["name"]}
 =================================
 
 .. toctree::
@@ -97,14 +99,19 @@ def index_builder(drive_dict, chapters):
     with open(file_path, 'w', encoding='utf-8') as writer:
         writer.write(output)
         for ch in chapters:
-            writer.write(ch)
+            writer.write("   "+ch)
+
+
+def to_html():
+    sourcedir = os.path.join(os.getcwd(), "source")
+    builddir = os.path.join(os.getcwd(), "docs")
+    os.system(f"sphinx-build -b html {sourcedir} {builddir}")
 
 
 def main():
     folders, sorted_folders = get_folders(worm_dict)
     lookup_files_in_folders(folders, sorted_folders)
-    index_builder(worm_dict, chapters)
-
+    to_html()
 
 
 if __name__ == '__main__':
