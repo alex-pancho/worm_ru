@@ -81,11 +81,12 @@ def download_file_from_google_drive(file_id, file_name, mime=None):
         if "#" in secline:
             output = output + secline
         else:
-            output = output + "##################\n" + secline
+            output = output + "#"*len(secline)+"\n" + secline
         for line in reader:
             output = output + line.replace("\n", "\n\n")
     with open(file_path, 'w', encoding='utf-8') as writer:
         writer.write(output)
+
 
 def index_builder():
     drive_dict = worm_dict
