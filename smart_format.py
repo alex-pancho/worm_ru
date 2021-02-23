@@ -29,8 +29,9 @@ def html_add_comments():
                 with open(filepath, 'r', encoding='utf-8') as reader:
                     output = reader.read()
                 output = output.replace(
-                    '<div class="sphinxsidebar"',
+                    '<div class="clearer"></div>',
                     '''
+                    <div class="clearer"></div>
                     <div id="octomments"></div>
                     <script>
                       Octomments({
@@ -42,9 +43,7 @@ def html_add_comments():
                         issueNumber: 1,
                         renderer: [OctommentsRenderer, "#comments"],
                       }).init();
-                    </script>
-
-                    <div class="sphinxsidebar"'''
+                    </script>'''
                     )
                 with open(filepath, 'w', encoding='utf-8') as writer:
                     writer.write(output)
