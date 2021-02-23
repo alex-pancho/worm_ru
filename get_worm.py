@@ -57,7 +57,7 @@ def lookup_files_in_folders(folders, sorted_folders, drive_dict):
     for f in sorted_folders:
         all_files = get_files_in_folders(folders[f])
         for fi in all_files:
-            file_name = smart_format.replace_me(fi["name"])  #
+            file_name = smart_format.replace_me(fi["name"], transliter=True)  #
             download_file_from_google_drive(fi["id"], file_name)
             chapters.append(file_name)
             index_builder(drive_dict)

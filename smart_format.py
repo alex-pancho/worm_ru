@@ -3,8 +3,10 @@ from transliterate import translit
 
 filename_list = [
         ["[Изменено]", ""],
-        ["(правка)", ""],
-        ["(кавычки)", ""],
+        ["(правка)", ""], ["(правка,", ""],
+        ["(правки)", ""], ["правки)", ""],
+        ["(кавычки)", ""], ["(кавычки,", ""], ["кавычки)", ""],
+        ["(перевыложено)", ""],
         [" ", ""],
         ]
 text_list = [
@@ -17,10 +19,11 @@ text_list = [
         ]
 
 
-def replace_me(filename, replace_list=filename_list):
+def replace_me(filename, replace_list=filename_list, transliter=False):
     for r in replace_list:
         filename = filename.replace(r[0], r[1])
-    filename = translit(filename, 'ru', reversed=True)
+    if transliter:
+        filename = translit(filename, 'ru', reversed=True)
     return filename
 
 
