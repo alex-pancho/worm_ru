@@ -97,6 +97,7 @@ def index_builder(drive_dict):
 
 def to_html():
     os.system("make github")
+    smart_format.html_add_comments()
 
 
 def main():
