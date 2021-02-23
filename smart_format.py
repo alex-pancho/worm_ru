@@ -1,8 +1,26 @@
 import os
+from transliterate import translit
+
+filename_list = [
+        ["[Изменено]", ""],
+        ["(правка)", ""],
+        ["(кавычки)", ""],
+        [" ", ""],
+        ]
+text_list = [
+        ["<b>", "**"],
+        ["</b>", "**"],
+        ["<i>", "*"],
+        ["</i>", "*"],
+        ["\n", "\n\n"],
+        # ["", ""],
+        ]
 
 
-def filename_fixed(filename):
-    filename = filename.replace(" ", "_")
+def replace_me(filename, replace_list=filename_list):
+    for r in replace_list:
+        filename = filename.replace(r[0], r[1])
+    filename = translit(filename, 'ru', reversed=True)
     return filename
 
 
@@ -15,7 +33,8 @@ def content_parser(filepath):
         else:
             output = output + "#"*len(output)+"\n" + secline
         for line in reader:
-            line = line.replace("\n", "\n\n")
+            line = line.strip(" ")
+            line = replace_me(line, text_list)
             output = output + line
     with open(filepath, 'w', encoding='utf-8') as writer:
         writer.write(output)

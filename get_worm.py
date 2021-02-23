@@ -57,7 +57,7 @@ def lookup_files_in_folders(folders, sorted_folders, drive_dict):
     for f in sorted_folders:
         all_files = get_files_in_folders(folders[f])
         for fi in all_files:
-            file_name = smart_format.filename_fixed(fi["name"])
+            file_name = smart_format.replace_me(fi["name"])
             download_file_from_google_drive(fi["id"], file_name)
             chapters.append(file_name)
             index_builder(drive_dict)
@@ -100,11 +100,11 @@ def to_html():
     smart_format.html_add_comments()
 
 
-def main():
+def worm():
     folders, sorted_folders = get_folders(worm_dict)
     lookup_files_in_folders(folders, sorted_folders, worm_dict)
     to_html()
 
 
 if __name__ == '__main__':
-    main()
+    worm()
