@@ -43,7 +43,7 @@ def html_add_comments():
                           repo: "worm_ru",
                         },
                         issueNumber: 1,
-                        renderer: [OctommentsRenderer, "#comments"],
+                        renderer: [OctommentsRenderer, "#octomments"],
                       }).init();
                     </script>
 </div>
