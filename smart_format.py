@@ -34,7 +34,7 @@ def content_parser(filepath):
         if "#" in secline:
             output = output + secline
         else:
-            output = output + "#"*len(output)+"\n" + secline
+            output = output + "#"*len(output)+"\n" + replace_me(secline, text_list)
         for line in reader:
             line = line.strip(" ")
             line = replace_me(line, text_list)
