@@ -2,6 +2,7 @@ from getfilelistpy import getfilelist
 from google_drive_downloader import GoogleDriveDownloader as gdd
 import json
 import os
+import smart_format
 
 api_key = None
 with open('credentials.json') as json_file:
@@ -52,14 +53,14 @@ def get_files_in_folders(folder_id):
     return all_files
 
 
-def lookup_files_in_folders(folders, sorted_folders):
+def lookup_files_in_folders(folders, sorted_folders, drive_dict):
     for f in sorted_folders:
         all_files = get_files_in_folders(folders[f])
         for fi in all_files:
-            file_name = fi["name"].replace(" ", "_")
+            file_name = smart_format.filename_fixed(fi["name"])
             download_file_from_google_drive(fi["id"], file_name)
             chapters.append(file_name)
-            index_builder()
+            index_builder(drive_dict)
 
 
 def download_file_from_google_drive(file_id, file_name, mime=None):
@@ -74,22 +75,10 @@ def download_file_from_google_drive(file_id, file_name, mime=None):
         overwrite=True,
         mime=mime
         )
-
-    with open(file_path, 'r', encoding='utf-8') as reader:
-        output = reader.readline()
-        secline = reader.readline()
-        if "#" in secline:
-            output = output + secline
-        else:
-            output = output + "#"*len(output)+"\n" + secline
-        for line in reader:
-            output = output + line.replace("\n", "\n\n")
-    with open(file_path, 'w', encoding='utf-8') as writer:
-        writer.write(output)
+    smart_format.content_parser(file_path)
 
 
-def index_builder():
-    drive_dict = worm_dict
+def index_builder(drive_dict):
     file_path = os.path.join(os.getcwd(), "source", "index.rst")
     output = f'''{drive_dict["name"]}
 =================================
@@ -112,7 +101,7 @@ def to_html():
 
 def main():
     folders, sorted_folders = get_folders(worm_dict)
-    lookup_files_in_folders(folders, sorted_folders)
+    lookup_files_in_folders(folders, sorted_folders, worm_dict)
     to_html()
 
 
