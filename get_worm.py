@@ -91,7 +91,7 @@ def index_builder(drive_dict):
 '''
     with open(file_path, 'w', encoding='utf-8') as writer:
         writer.write(output)
-        for ch in chapters:
+        for ch in chapters.sort():
             writer.write("   "+ch+"\n")
 
 
@@ -103,6 +103,7 @@ def to_html():
 def worm():
     folders, sorted_folders = get_folders(worm_dict)
     lookup_files_in_folders(folders, sorted_folders, worm_dict)
+    index_builder(worm_dict)
     to_html()
 
 
