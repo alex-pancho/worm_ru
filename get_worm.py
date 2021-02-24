@@ -19,9 +19,9 @@ worm_dict = {
         '!_ORIGINAL_source',
         'Часть 99 - Всё, что нельзя пропустить',
         'Главчервестат'
-        ]
+        ],
+    "chapters": []
     }
-chapters = []
 
 
 def get_drive_source(drive_id, mode="folder"):
@@ -59,7 +59,7 @@ def lookup_files_in_folders(folders, sorted_folders, drive_dict):
         for fi in all_files:
             file_name = smart_format.replace_me(fi["name"], transliter=True)  #
             download_file_from_google_drive(fi["id"], file_name)
-            chapters.append(file_name)
+            drive_dict["chapters"].append(file_name)
             index_builder(drive_dict)
 
 
@@ -91,7 +91,7 @@ def index_builder(drive_dict):
 '''
     with open(file_path, 'w', encoding='utf-8') as writer:
         writer.write(output)
-        for ch in chapters.sort():
+        for ch in sorted(drive_dict["chapters"]):
             writer.write("   "+ch+"\n")
 
 
